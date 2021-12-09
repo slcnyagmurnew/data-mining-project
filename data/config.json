@@ -1,0 +1,26 @@
+{
+    "distance":
+    {
+        "encode": "hot_encode_distance",
+        "columns": ["Distance(mi)", "Severity"],
+        "min_support": 0.0045
+    },
+    "severity":
+    {
+        "encode": "hot_encode_severity",
+        "columns": ["Temperature(F)", "Sunrise_Sunset", "Severity"],
+        "min_support": 0.02
+    },
+    "visibility":
+    {
+        "encode": "hot_encode_visibility",
+        "columns": ["Visibility(mi)", "Weather_Condition"],
+        "min_support": 0.002
+    },
+    "fp":
+    {
+        "encode": "hot_encode_visibility",
+        "columns": ["Severity", "Temperature(F)"],
+        "min_support": 0.002
+    }
+}
