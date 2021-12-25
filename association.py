@@ -9,7 +9,7 @@ from fpgrowth_py import fpgrowth
 import numpy as np
 
 
-data = pd.read_csv('update.csv')
+data = pd.read_csv('data/last.csv')
 
 
 # smaller support value with <25
@@ -136,7 +136,7 @@ def apply_fpgrowth(columns):
     rules = rules.sort_values(['confidence', 'lift'], ascending=[True, True])
     print(rules.head())
 
-
+"""
 def fpgrowth2(columns):
     global data
     data = data[[c for c in data.columns if c in columns]]
@@ -170,7 +170,7 @@ def fpgrowth2(columns):
     # frequent_itemsets
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.7)
     print(rules)
-
+"""
 
 if __name__ == '__main__':
     # apply_severity()
@@ -186,6 +186,6 @@ if __name__ == '__main__':
     columns = metric_dict['columns']
     min_support = metric_dict['min_support']
 
-    # apply_apriori(encode, columns, min_support)
+    apply_apriori(encode, columns, min_support)
     # apply_fpgrowth(columns=columns)
-    fpgrowth2(columns)
+    # fpgrowth2(columns)
