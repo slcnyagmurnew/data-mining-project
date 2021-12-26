@@ -11,14 +11,11 @@ warnings.filterwarnings("ignore")
 
 from utils import *
 
-inputFile = 'data/last.csv'
+input_file_1 = 'data/numerical_train.csv'
+input_file_2 = 'data/categorical_train.csv'
 predictionClass = 'Severity'
-classes = ['Temperature(F)', 'Wind_Chill(F)', 'Humidity(%)', 'Pressure(in)', 'Visibility(mi)',
-           'Wind_Speed(mph)', 'Precipitation(in)']
-feature_classes = ['Temperature(F)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Speed(mph)']
-
-
-# feature_classes = ['Junction', 'Traffic_Signal', 'Crossing', 'Weather_Condition', 'Sunrise_Sunset']
+feature_classes_1 = ['Temperature(F)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Speed(mph)']
+feature_classes_2 = ['Junction', 'Traffic_Signal', 'Crossing', 'Weather_Condition', 'Sunrise_Sunset']
 
 
 def drop_outlier_v2(data):
@@ -37,20 +34,23 @@ def drop_outlier_v2(data):
     return data.dropna().reset_index(drop=True)
 
 
-def get_data(input_file, classes, prediction_class='Severity', is_normalize=True):
-    """
+def get_data(input_file, classes, prediction_class='Severity', is_normalize=False, remove_outlier=False):
+    '''
     loads data from file system and prepares for training
+    :param remove_outlier: if true drops outlier values, if feature classes contains NON NUMERICAL values,
+     change this with FALSE
     :param input_file: input csv file
     :param classes: feature classes
     :param prediction_class: prediction class
-    :param is_normalize: if True normalizes numerical values, if feature classes contains NON-NUMERICAL values,
+    :param is_normalize: if True normalizes numerical values, if feature classes contains NON NUMERICAL values,
      change this with FALSE
     :return: returns train and test values
-    """
+    '''
     df = pd.read_csv(input_file)
-    df.dropna()
-    df = drop_outlier(df)
+    if remove_outlier:
+        df = drop_outlier(df)
     # df = df[df.Severity != 4]
+    df.dropna()
 
     X = df[classes]
     y = df[prediction_class]
@@ -105,7 +105,7 @@ def train_classifier(data_list, prediction_method='logistic_regression',
         model = DecisionTreeClassifier()
 
     elif prediction_method == 'knn':
-        model = KNeighborsClassifier()
+        model = KNeighborsClassifier(n_neighbors=1)
 
     else:
         print('Please give correct classifier name !')
@@ -144,24 +144,21 @@ def prediction(model, x_test, y_test):
     pass
 
 
-# print('Accuracy of Logistic regression classifier on training set: {:.2f}'
-#       .format(logreg.score(X_train, y_train)))
-#
-# print('Accuracy of Logistic regression classifier on test set: {:.2f}'
-#       .format(logreg.score(X_test, y_test)))
-
-# print(f'Predicted Values of Test Set = {logreg.predict(X_test).tolist()}')
-# print(f'Actual Values of Test Set    = {y_test.tolist()}')
-
 if __name__ == '__main__':
-    X_train, X_test, y_train, y_test = get_data(input_file=inputFile, classes=feature_classes,
-                                                prediction_class=predictionClass)
+    X_train, X_test, y_train, y_test = get_data(input_file=input_file_1, classes=feature_classes_1,
+                                                prediction_class=predictionClass, is_normalize=True,
+                                                remove_outlier=True)
     dataList = [X_train, X_test, y_train, y_test]
 
-    train_classifier(data_list=dataList, prediction_method='decision_tree')
-    train_classifier(data_list=dataList, prediction_method='knn')
-    train_classifier(data_list=dataList, prediction_method='logistic_regression')
+    train_classifier(data_list=dataList, prediction_method='decision_tree', saved_model_name='cat_decision')
+    train_classifier(data_list=dataList, prediction_method='knn', saved_model_name='cat_knn')
+    train_classifier(data_list=dataList, prediction_method='logistic_regression', saved_model_name='cat_log_reg')
 
-    # train_classifier(data_list=dataList, prediction_method='logistic_regression', saved_model_name='models\\logreg')
-    # train_classifier(data_list=dataList, prediction_method='decision_tree', saved_model_name='models\\decision_tree')
-    # train_classifier(data_list=dataList, prediction_method='knn', saved_model_name='models\\knn')
+    X_train_2, X_test_2, y_train_2, y_test_2 = get_data(input_file=input_file_2, classes=feature_classes_2,
+                                                        prediction_class=predictionClass, is_normalize=False,
+                                                        remove_outlier=False)
+    dataList_2 = [X_train_2, X_test_2, y_train_2, y_test_2]
+
+    train_classifier(data_list=dataList, prediction_method='logistic_regression', saved_model_name='num_logreg')
+    train_classifier(data_list=dataList, prediction_method='decision_tree', saved_model_name='num_decision')
+    train_classifier(data_list=dataList, prediction_method='knn', saved_model_name='num_knn')
