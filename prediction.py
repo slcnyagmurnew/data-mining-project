@@ -150,15 +150,15 @@ if __name__ == '__main__':
                                                 remove_outlier=True)
     dataList = [X_train, X_test, y_train, y_test]
 
-    train_classifier(data_list=dataList, prediction_method='decision_tree', saved_model_name='cat_decision')
-    train_classifier(data_list=dataList, prediction_method='knn', saved_model_name='cat_knn')
-    train_classifier(data_list=dataList, prediction_method='logistic_regression', saved_model_name='cat_log_reg')
+    train_classifier(data_list=dataList, prediction_method='decision_tree', saved_model_name='num_decision')
+    train_classifier(data_list=dataList, prediction_method='knn', saved_model_name='num_knn')
+    train_classifier(data_list=dataList, prediction_method='logistic_regression', saved_model_name='num_log_reg')
 
     X_train_2, X_test_2, y_train_2, y_test_2 = get_data(input_file=input_file_2, classes=feature_classes_2,
                                                         prediction_class=predictionClass, is_normalize=False,
                                                         remove_outlier=False)
     dataList_2 = [X_train_2, X_test_2, y_train_2, y_test_2]
 
-    train_classifier(data_list=dataList, prediction_method='logistic_regression', saved_model_name='num_logreg')
-    train_classifier(data_list=dataList, prediction_method='decision_tree', saved_model_name='num_decision')
-    train_classifier(data_list=dataList, prediction_method='knn', saved_model_name='num_knn')
+    train_classifier(data_list=dataList_2, prediction_method='logistic_regression', saved_model_name='cat_logreg')
+    train_classifier(data_list=dataList_2, prediction_method='decision_tree', saved_model_name='cat_decision')
+    train_classifier(data_list=dataList_2, prediction_method='knn', saved_model_name='cat_knn')
