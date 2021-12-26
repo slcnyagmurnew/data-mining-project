@@ -150,18 +150,18 @@ def split_to_train(input_file, out_dir, size):
 
 
 if __name__ == '__main__':
-    # split_csv_by_column_name(input_file=input_file, column_names=column_list,
-    #                          out_dir='data/last.csv')
+    split_csv_by_column_name(input_file=input_file, column_names=column_list,
+                            out_dir='data/last.csv')
                              
     # ------------- numerical part ---------------------------------------------
     split_csv_by_column_name(input_file='data/last.csv', column_names=features_1,
-                             out_dir='data/numerical.csv')
+                            out_dir='data/numerical.csv')
     split_to_train(input_file='data/numerical.csv', out_dir='data/numerical_train.csv', size=3000)
     
     
     # --------------- categorical part---------------------------------------------
     split_csv_by_column_name(input_file='data/last.csv', column_names=features_2,
-                             out_dir='data/categorical.csv')
+                            out_dir='data/categorical.csv')
 
     df = pd.read_csv('data/categorical.csv')
     # ---------------------- mapping for categorical data ------------------------------

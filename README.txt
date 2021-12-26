@@ -1,0 +1,1 @@
+Girdi verisi boyut anlamında büyük olduğundan proje dosyasının içine koyulamamıştır. Proje kodlarının düzgün çalışabilmesi amacıyla veri aşağıdaki linkten 'data' klasörüne indirilmeli ve 'preprocess.py' dosyası öncelikli olarak çalıştırılmalıdır.

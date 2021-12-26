@@ -162,3 +162,7 @@ if __name__ == '__main__':
     train_classifier(data_list=dataList_2, prediction_method='logistic_regression', saved_model_name='cat_logreg')
     train_classifier(data_list=dataList_2, prediction_method='decision_tree', saved_model_name='cat_decision')
     train_classifier(data_list=dataList_2, prediction_method='knn', saved_model_name='cat_knn')
+
+    model = load_model('models/num_log_reg.sav')
+    prediction(model=model, x_test=X_test, y_test=y_test)
+    

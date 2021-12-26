@@ -167,11 +167,7 @@ def classification(method):
 
 
 if __name__ == '__main__':
-    # classification('decision')
-    # classification('random')
+    classification('decision')
+    classification('random')
     classification('logistic')
-    # model = load_model('decision_tree.sav')
-    # print(model.predict([[1, 0]]))
-    # print(dtree.predict([[0.5, 3, 60]])) decision tree icerisinde
-    # print(dataset['Severity'].value_counts())
-
+    
